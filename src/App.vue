@@ -5,7 +5,7 @@
         <controls-menu />
       </el-aside>
       <el-main class="ui-viewport" >
-        <viewport />
+        <world />
         <controls-overlay />
       </el-main>
     </el-container>
@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import Viewport from '@/components/Viewport';
+import World from '@/components/World';
 import ControlsMenu from '@/components/ControlsMenu';
 import ControlsOverlay from '@/components/ControlsOverlay';
 
@@ -21,10 +21,10 @@ export default {
   name: 'app',
 
   components: {
-    Viewport,
+    World,
     ControlsMenu,
     ControlsOverlay
-  }
+	}
 }
 </script>
 

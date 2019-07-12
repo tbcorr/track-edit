@@ -4,10 +4,17 @@
 
 <script>
 import { mapState } from 'vuex';
+import { Scene, Engine, ArcRotateCamera, Vector3, PointerEventTypes, Plane, RayHelper, Color3 } from 'babylonjs';
 import { setup } from '@/world';
 
 export default {
 	name: 'viewport',
+
+	data() {
+		return {
+
+		};
+	},
 
 	computed: {
 		...mapState([
@@ -15,8 +22,14 @@ export default {
 		])
 	},
 
+	methods: {	
+		onRender() {
+			this.scene.render();
+		}
+	},
+
 	mounted() {
-		setup(this.$refs.canvas)
+		setup(this.$refs.canvas);
 	}
 }
 </script>
