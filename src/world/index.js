@@ -1,5 +1,17 @@
-import { Scene, Engine, DirectionalLight, ArcRotateCamera, Vector3, MeshBuilder, Tools, Color3 } from 'babylonjs';
-import { createEditTrackSegment } from './track';
+import {
+	Scene,
+	Engine,
+	DirectionalLight,
+	ArcRotateCamera,
+	Vector3,
+	MeshBuilder,
+	Tools,
+	Color3,
+	UtilityLayerRenderer,
+	PositionGizmo,
+	PointerEventTypes
+} from 'babylonjs';
+import ArcTrackSegment from './track/ArcTrackSegment';
 
 const CAMERA_NAME = 'Camera';
 const GRID_NAME = 'Grid';
@@ -25,19 +37,22 @@ const onRender = () => {
 };
 
 const setup = (canvasElement) => {
-	engine = createEngine(canvasElement);
+	engine = createEngine(canvasElement, 1);
 	scene = createScene();
 	light = createLight();
 	camera = createCamera(canvasElement);
 	grid = createGrid(1000, 100);
-	buildPlane = createBuildPlane();
+	// buildPlane = createBuildPlane();
 
 	utilLayer = new UtilityLayerRenderer(scene);
 	positionGizmo = new PositionGizmo(utilLayer);
 
-	createEditTrackSegment(new Vector3(0, 1, 0), scene);
-
 	setupPointerObserver(scene);
+
+	const segment = new ArcTrackSegment("Track Segment", Vector3.Zero(), Vector3.Forward(), scene);
+	segment.phi = 360;
+	segment.theta = 0;
+	segment.update();
 
 	engine.runRenderLoop(onRender);
 };
@@ -45,26 +60,26 @@ const setup = (canvasElement) => {
 const setupPointerObserver = () => {
 	scene.onPointerObservable.add((pointerInfo) => {      
 		switch (pointerInfo.type) {
-			case BABYLON.PointerEventTypes.POINTERDOWN:
+			case PointerEventTypes.POINTERDOWN:
 				// onPointerDown(scene);
 				break;
-			case BABYLON.PointerEventTypes.POINTERUP:
+			case PointerEventTypes.POINTERUP:
 				console.log("POINTER UP");
 				break;
-			case BABYLON.PointerEventTypes.POINTERMOVE:
+			case PointerEventTypes.POINTERMOVE:
 				// onPointerMove();
 				break;
-			case BABYLON.PointerEventTypes.POINTERPICK:
+			case PointerEventTypes.POINTERPICK:
 				console.log("POINTER PICK");
 				break;
       }
 	});
 };
 
-const createEngine = (canvasElement) => {
+const createEngine = (canvasElement, scalingLevel) => {
 	const engine = new Engine(canvasElement, true);
 
-	engine.setHardwareScalingLevel(2);
+	engine.setHardwareScalingLevel(scalingLevel);
 
 	return engine;
 };

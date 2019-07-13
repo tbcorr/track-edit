@@ -1,3 +1,5 @@
+import { StandardMaterial, Color3 } from 'babylonjs';
+
 const CONTROL_POINT_MATERIAL_NAME = 'Control Point';
 const TRACK_SEGMENT_MATERIAL_NAME = 'Track Segment';
 

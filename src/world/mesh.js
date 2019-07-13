@@ -1,9 +1,10 @@
+import { MeshBuilder } from 'babylonjs';
 import { createControlPointMaterial, createTrackSegmentMaterial } from './material';
 
-const createControlPointMesh = (scene) => {
+const createControlPointMesh = (name, scene) => {
 	const material = createControlPointMaterial(scene);
 
-	const mesh = MeshBuilder.CreateIcoSphere(CONTROL_POINT_NAME, {radius: 1}, scene);
+	const mesh = MeshBuilder.CreateIcoSphere(name, {radius: 0.1}, scene);
 	mesh.material = material;
 	mesh.isPickable = true;
 
@@ -15,6 +16,8 @@ const createTrackSegmentMesh = (name, points, instance, scene) => {
 	
 	const mesh = MeshBuilder.CreateLines(name, { points, instance, updatable: true }, scene);
 	mesh.material = material;
+
+	console.log(mesh);
 
 	return mesh;
 }
